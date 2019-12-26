@@ -21,7 +21,7 @@ resource "aws_security_group_rule" "serf_lan_tcp" {
   protocol          = "tcp"
   from_port         = 8301
   to_port           = 8301
-  cidr_blocks       = [var.cidr_blocks]
+  cidr_blocks       = var.cidr_blocks
 }
 
 # Serf LAN (Default 8301) - UDP. This is used to handle gossip in the LAN. Required by all agents on TCP and UDP.
@@ -33,7 +33,7 @@ resource "aws_security_group_rule" "serf_lan_udp" {
   protocol          = "udp"
   from_port         = 8301
   to_port           = 8301
-  cidr_blocks       = [var.cidr_blocks]
+  cidr_blocks       = var.cidr_blocks
 }
 
 #Consul Connect Default ports - TCP
@@ -45,7 +45,7 @@ resource "aws_security_group_rule" "server_connect_tcp" {
   protocol          = "tcp"
   from_port         = 20000
   to_port           = 20255
-  cidr_blocks       = [var.cidr_blocks]
+  cidr_blocks       = var.cidr_blocks
 }
 
 # CLI RPC (Default 8400) - TCP. This is used by all agents to handle RPC from the CLI on TCP only.
@@ -59,7 +59,7 @@ resource "aws_security_group_rule" "cli_rpc_tcp" {
   protocol          = "tcp"
   from_port         = 8400
   to_port           = 8400
-  cidr_blocks       = [var.cidr_blocks]
+  cidr_blocks       = var.cidr_blocks
 }
 
 # HTTP API (Default 8500) - TCP. This is used by agents to talk to the HTTP API on TCP only.
@@ -71,7 +71,7 @@ resource "aws_security_group_rule" "http_api_tcp" {
   protocol          = "tcp"
   from_port         = 8500
   to_port           = 8500
-  cidr_blocks       = [var.cidr_blocks]
+  cidr_blocks       = var.cidr_blocks
 }
 
 # DNS Interface (Default 8600) - TCP. Used to resolve DNS queries on TCP and UDP.
@@ -83,7 +83,7 @@ resource "aws_security_group_rule" "dns_interface_tcp" {
   protocol          = "tcp"
   from_port         = 8600
   to_port           = 8600
-  cidr_blocks       = [var.cidr_blocks]
+  cidr_blocks       = var.cidr_blocks
 }
 
 # DNS Interface (Default 8600) - UDP. Used to resolve DNS queries on TCP and UDP.
@@ -95,7 +95,7 @@ resource "aws_security_group_rule" "dns_interface_udp" {
   protocol          = "udp"
   from_port         = 8600
   to_port           = 8600
-  cidr_blocks       = [var.cidr_blocks]
+  cidr_blocks       = var.cidr_blocks
 }
 
 # All outbound traffic - TCP.
