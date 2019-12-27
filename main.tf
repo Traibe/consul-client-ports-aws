@@ -4,7 +4,7 @@ terraform {
 
 # https://www.consul.io/docs/agent/options.html#ports
 resource "aws_security_group" "consul_client" {
-  count = var.create ? 1 : 0
+  count = var.create == true ? 1 : 0
 
   name_prefix = "${var.name}-"
   description = "Security Group for ${var.name} Consul"
@@ -14,7 +14,7 @@ resource "aws_security_group" "consul_client" {
 
 # Serf LAN (Default 8301) - TCP. This is used to handle gossip in the LAN. Required by all agents on TCP and UDP.
 resource "aws_security_group_rule" "serf_lan_tcp" {
-  count = var.create ? 1 : 0
+  count = var.create == true ? 1 : 0
 
   security_group_id = aws_security_group.consul_client[count.index].id
   type              = "ingress"
@@ -26,7 +26,7 @@ resource "aws_security_group_rule" "serf_lan_tcp" {
 
 # Serf LAN (Default 8301) - UDP. This is used to handle gossip in the LAN. Required by all agents on TCP and UDP.
 resource "aws_security_group_rule" "serf_lan_udp" {
-  count = var.create ? 1 : 0
+  count = var.create == true ? 1 : 0
 
   security_group_id = aws_security_group.consul_client[count.index].id
   type              = "ingress"
@@ -38,7 +38,7 @@ resource "aws_security_group_rule" "serf_lan_udp" {
 
 #Consul Connect Default ports - TCP
 resource "aws_security_group_rule" "server_connect_tcp" {
-  count = var.create ? 1 : 0
+  count = var.create == true ? 1 : 0
 
   security_group_id = aws_security_group.consul_client[count.index].id
   type              = "ingress"
@@ -52,7 +52,7 @@ resource "aws_security_group_rule" "server_connect_tcp" {
 # This is deprecated in Consul 0.8 and later - all CLI commands were changed to use the
 # HTTP API and the RPC interface was completely removed.
 resource "aws_security_group_rule" "cli_rpc_tcp" {
-  count = var.create ? 1 : 0
+  count = var.create == true ? 1 : 0
 
   security_group_id = aws_security_group.consul_client[count.index].id
   type              = "ingress"
@@ -64,7 +64,7 @@ resource "aws_security_group_rule" "cli_rpc_tcp" {
 
 # HTTP API (Default 8500) - TCP. This is used by agents to talk to the HTTP API on TCP only.
 resource "aws_security_group_rule" "http_api_tcp" {
-  count = var.create ? 1 : 0
+  count = var.create == true ? 1 : 0
 
   security_group_id = aws_security_group.consul_client[count.index].id
   type              = "ingress"
@@ -76,7 +76,7 @@ resource "aws_security_group_rule" "http_api_tcp" {
 
 # DNS Interface (Default 8600) - TCP. Used to resolve DNS queries on TCP and UDP.
 resource "aws_security_group_rule" "dns_interface_tcp" {
-  count = var.create ? 1 : 0
+  count = var.create == true ? 1 : 0
 
   security_group_id = aws_security_group.consul_client[count.index].id
   type              = "ingress"
@@ -88,7 +88,7 @@ resource "aws_security_group_rule" "dns_interface_tcp" {
 
 # DNS Interface (Default 8600) - UDP. Used to resolve DNS queries on TCP and UDP.
 resource "aws_security_group_rule" "dns_interface_udp" {
-  count = var.create ? 1 : 0
+  count = var.create == true ? 1 : 0
 
   security_group_id = aws_security_group.consul_client[count.index].id
   type              = "ingress"
@@ -100,7 +100,7 @@ resource "aws_security_group_rule" "dns_interface_udp" {
 
 # All outbound traffic - TCP.
 resource "aws_security_group_rule" "outbound_tcp" {
-  count = var.create ? 1 : 0
+  count = var.create == true ? 1 : 0
 
   security_group_id = aws_security_group.consul_client[count.index].id
   type              = "egress"
@@ -112,7 +112,7 @@ resource "aws_security_group_rule" "outbound_tcp" {
 
 # All outbound traffic - UDP.
 resource "aws_security_group_rule" "outbound_udp" {
-  count = var.create ? 1 : 0
+  count = var.create == true ? 1 : 0
 
   security_group_id = aws_security_group.consul_client[count.index].id
   type              = "egress"
